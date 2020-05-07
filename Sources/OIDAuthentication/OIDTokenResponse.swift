@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OIDTokenResponse {
+struct OIDTokenResponse: Codable, Equatable {
 
   let tokenType: String
   let idToken: String
@@ -15,5 +15,3 @@ struct OIDTokenResponse {
   let refreshToken: String
   
 }
-
-extension OIDTokenResponse: Decodable { }

@@ -8,15 +8,7 @@
 import Combine
 import Foundation
 
-public final class UserCredential {
-
-  public static var supportsSecureCoding = true
-
-  private enum CoderKeys {
-
-    static let serviceConfiguration = "userCredential_serviceConfiguration"
-
-  }
+public final class UserCredential: Codable, Equatable {
 
   private let serviceConfiguration: OIDServiceConfiguration
   private var lastTokenReponse: OIDTokenResponse
@@ -32,6 +24,11 @@ public final class UserCredential {
   init(serviceConfiguration: OIDServiceConfiguration, tokenResponse: OIDTokenResponse) {
     self.serviceConfiguration = serviceConfiguration
     self.lastTokenReponse = tokenResponse
+  }
+
+  public static func == (lhs: UserCredential, rhs: UserCredential) -> Bool {
+    lhs.lastTokenReponse == rhs.lastTokenReponse
+      && lhs.serviceConfiguration == rhs.serviceConfiguration
   }
 
   public func acquireToken() -> AnyPublisher<String, OIDAuthorizationError> {

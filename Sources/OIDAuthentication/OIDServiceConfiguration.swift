@@ -7,17 +7,11 @@
 
 import Foundation
 
-public struct OIDServiceConfiguration {
+public struct OIDServiceConfiguration: Codable, Equatable {
 
-  /// The authorization endpoint URI.
   public let authorizationEndpoint: URL
-  /// The token exchange and refresh endpoint URI.
   public let tokenEndpoint: URL
-  /// The OpenID Connect issuer.
   public let issuer: URL?
-  /// The end session logout endpoint URI.
   public let endSessionEndpoint: URL?
 
 }
-
-extension OIDServiceConfiguration: Codable { }

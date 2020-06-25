@@ -12,6 +12,8 @@ import Foundation
 public final class AuthenticationService {
     private static var currentAuthorizationFlow: OIDExternalUserAgentSession?
 
+    public init() { }
+
     public func signIn(configuration: OIDProviderConfigurationRepresentable, redirectURL: URL,
                 loginHint: String? = nil) -> AnyPublisher<OIDAuthState, Error> {
         let providerConfiguration = configuration.oidProviderConfigurationValue()

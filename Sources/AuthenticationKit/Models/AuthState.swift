@@ -28,7 +28,7 @@ public final class AuthState {
                        or: authState.lastTokenResponse?.idToken)
     }
 
-    public func performTask() -> AnyPublisher<String?, Error> {
+    public func performAction() -> AnyPublisher<String?, Error> {
         authState.performActionPublisher()
             .map { JWT(fromAccessToken: $0.0, or: $0.1) }
             .handleEvents(receiveOutput: { self.jwt = $0 })

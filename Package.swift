@@ -4,17 +4,18 @@
 import PackageDescription
 
 let package = Package(
-  name: "AuthenticationKit",
-  platforms: [
-    .macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6)
-  ],
-  products: [
-    .library(name: "AuthenticationKit", targets: ["AuthenticationKit"]),
-  ],
-  targets: [
-    .target(name: "AuthenticationKit", dependencies: ["OIDAuthentication"]),
-
-    .target(name: "OIDAuthentication", dependencies: []),
-    .testTarget(name: "OIDAuthenticationTests", dependencies: ["OIDAuthentication"]),
-  ]
+    name: "AuthenticationKit",
+    platforms: [
+        .macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6)
+    ],
+    products: [
+        .library(name: "AuthenticationKit", targets: ["AuthenticationKit"]),
+    ],
+    dependencies: [
+        .package(name: "AppAuth", url: "https://github.com/openid/AppAuth-iOS.git", from: "1.4.0")
+    ],
+    targets: [
+        .target(name: "AuthenticationKit", dependencies: ["AppAuth"]),
+        .testTarget(name: "AuthenticationKitTests", dependencies: ["AuthenticationKit"])
+    ]
 )

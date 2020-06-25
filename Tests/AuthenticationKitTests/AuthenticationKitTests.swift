@@ -1,20 +1,20 @@
 //
-//  OIDAuthorizationRequestTests.swift
+//  OIDAuthorizationServiceTests.swift
 //  OIDAuthenticationTests
 //
 //  Created by Adam Young on 23/09/2019.
 //
 
-@testable import OIDAuthentication
+@testable import AuthenticationKit
 import XCTest
 
-final class OIDAuthorizationRequestTests: XCTestCase {
+final class AuthenticationKitTests: XCTestCase {
 
   func test() { }
 
 }
 
-extension OIDAuthorizationRequestTests {
+extension AuthenticationKitTests {
 
   static var allTests = [
     ("test", test),

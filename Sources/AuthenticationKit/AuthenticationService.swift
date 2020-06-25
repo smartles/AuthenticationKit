@@ -15,7 +15,7 @@ public final class AuthenticationService {
     public init() { }
 
     public func signIn(configuration: OIDProviderConfigurationRepresentable, redirectURL: URL,
-                loginHint: String? = nil) -> AnyPublisher<OIDAuthState, Error> {
+                loginHint: String? = nil) -> AnyPublisher<AuthState, Error> {
         let providerConfiguration = configuration.oidProviderConfigurationValue()
         return OIDAuthorizationService.discoverConfigurationPublisher(forDiscoveryURL: providerConfiguration.wellKnownEndpoint)
             .tryMap { serviceConfiguration -> OIDAuthorizationRequest in
@@ -28,12 +28,12 @@ public final class AuthenticationService {
                                                redirectURL: redirectURL)
             }
             .flatMap { Self.authStatePublisher(byPresenting: $0) }
-            .tryMap { authState -> OIDAuthState in
+            .tryMap { authState -> AuthState in
                 guard let authState = authState else {
                     throw AuthenticationError.noAuthState
                 }
 
-                return authState
+                return AuthState(state: authState)
             }
             .eraseToAnyPublisher()
     }

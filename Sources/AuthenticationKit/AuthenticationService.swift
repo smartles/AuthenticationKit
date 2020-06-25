@@ -9,10 +9,10 @@ import AppAuth
 import Combine
 import Foundation
 
-final class AuthenticationService {
+public final class AuthenticationService {
     private static var currentAuthorizationFlow: OIDExternalUserAgentSession?
 
-    func signIn(configuration: OIDProviderConfigurationRepresentable, redirectURL: URL,
+    public func signIn(configuration: OIDProviderConfigurationRepresentable, redirectURL: URL,
                 loginHint: String? = nil) -> AnyPublisher<OIDAuthState, Error> {
         let providerConfiguration = configuration.oidProviderConfigurationValue()
         return OIDAuthorizationService.discoverConfigurationPublisher(forDiscoveryURL: providerConfiguration.wellKnownEndpoint)
@@ -25,9 +25,7 @@ final class AuthenticationService {
                                                providerConfiguration: providerConfiguration, loginHint: loginHint,
                                                redirectURL: redirectURL)
             }
-            .flatMap { request in
-                Self.authStatePublisher(byPresenting: request)
-            }
+            .flatMap { Self.authStatePublisher(byPresenting: $0) }
             .tryMap { authState -> OIDAuthState in
                 guard let authState = authState else {
                     throw AuthenticationError.noAuthState
@@ -41,7 +39,6 @@ final class AuthenticationService {
 }
 
 extension AuthenticationService {
-
     private static func authStatePublisher(byPresenting request: OIDAuthorizationRequest) -> AnyPublisher<OIDAuthState?, Error> {
         Future<OIDAuthState?, Error> { promise in
             let rootViewController = UIApplication.shared.windows.first!.rootViewController!
@@ -58,5 +55,4 @@ extension AuthenticationService {
         }
         .eraseToAnyPublisher()
     }
-
 }

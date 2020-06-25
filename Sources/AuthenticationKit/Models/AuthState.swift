@@ -9,7 +9,7 @@ import AppAuth
 import Combine
 import Foundation
 
-final class AuthState {
+public final class AuthState {
     private let authState: OIDAuthState
 
     public private(set) var jwt: JWT?
